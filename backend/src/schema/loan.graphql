@@ -1,0 +1,23 @@
+type Loan {
+  id: ID!
+  userId: ID!
+  bookId: ID!
+  loanDate: String!
+  dueDate: String
+  returnDate: String
+  status: String
+  isOverdue: Boolean!
+  user: User
+  book: Book
+}
+
+type Query {
+  loans: [Loan]
+}
+
+type Mutation {
+  borrowBook(userId: ID!, bookId: ID!): Loan
+  requestReturn(loanId: ID!): Loan
+  approveReturn(loanId: ID!): Loan
+  rejectReturn(loanId: ID!): Loan
+}

@@ -1,0 +1,23 @@
+type Book {
+  id: ID!
+  title: String!
+  author: String!
+  isbn: String!
+  year: Int!
+  available: Boolean!
+  stock: Int!
+  availableStock: Int!
+  coverUrl: String
+  loans: [Loan]
+}
+
+type Query {
+  books: [Book]
+  book(id: ID!): Book
+}
+
+type Mutation {
+  addBook(title: String!, author: String!, isbn: String!, year: Int!, coverUrl: String, stock: Int): Book
+  deleteBook(id: ID!): Boolean
+  updateBook(id: ID!, title: String, author: String, isbn: String, year: Int, coverUrl: String, stock: Int): Book
+}

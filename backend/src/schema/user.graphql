@@ -1,0 +1,23 @@
+type User {
+  id: ID!
+  name: String!
+  email: String!
+  role: String!
+  phone: String
+  createdAt: String
+  loans: [Loan]
+}
+
+type AuthPayload {
+  user: User!
+  message: String
+}
+
+type Query {
+  users: [User]
+}
+
+type Mutation {
+  registerUser(name: String!, email: String!, password: String!, phone: String): AuthPayload
+  loginUser(email: String!, password: String!): AuthPayload
+}
