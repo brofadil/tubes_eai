@@ -55,10 +55,18 @@ async function startServer() {
   // Start Apollo Server
   await server.start();
 
+  // Serve static frontend files from client/
+  app.use(cors());
+  app.use(express.static(path.join(__dirname, '../client')));
+
+  // Catch-all: serve index.html for root path (client-side routing)
+  app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, '../client/index.html'));
+  });
+
   // Apply middleware
   app.use(
     '/graphql',
-    cors(),
     express.json(),
     expressMiddleware(server)
   );
