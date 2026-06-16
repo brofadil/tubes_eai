@@ -1,15 +1,26 @@
 const { Sequelize, DataTypes } = require('sequelize');
 
-const sequelize = new Sequelize(
-  process.env.DB_NAME || 'library_db',
-  process.env.DB_USER || 'admin',
-  process.env.DB_PASSWORD || 'secret',
-  {
-    host: process.env.DB_HOST || 'localhost',
-    dialect: 'postgres',
-    logging: false,
-  }
-);
+const sequelize = process.env.DATABASE_URL
+  ? new Sequelize(process.env.DATABASE_URL, {
+      dialect: 'postgres',
+      logging: false,
+      dialectOptions: {
+        ssl: {
+          require: true,
+          rejectUnauthorized: false,
+        },
+      },
+    })
+  : new Sequelize(
+      process.env.DB_NAME || 'library_db',
+      process.env.DB_USER || 'admin',
+      process.env.DB_PASSWORD || 'secret',
+      {
+        host: process.env.DB_HOST || 'localhost',
+        dialect: 'postgres',
+        logging: false,
+      }
+    );
 
 // ── Book Model ──────────────────────────────────────────────
 const Book = sequelize.define('Book', {
